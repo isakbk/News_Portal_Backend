@@ -9,11 +9,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import News
-from .serializers import NewsSerializer
+from .serializers import NewsListSerializer, NewsSerializer
 
 
 class NewsListView(generics.ListAPIView):
-    serializer_class = NewsSerializer
+    serializer_class = NewsListSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
@@ -36,7 +36,7 @@ class NewsListView(generics.ListAPIView):
 
 
 class RecentNewsView(generics.ListAPIView):
-    serializer_class = NewsSerializer
+    serializer_class = NewsListSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
@@ -85,7 +85,7 @@ class NewsViewCountView(APIView):
 
 
 class NewsByDateView(generics.ListAPIView):
-    serializer_class = NewsSerializer
+    serializer_class = NewsListSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):

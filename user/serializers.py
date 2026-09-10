@@ -47,3 +47,27 @@ class NewsSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(url) if request else url
 
         return None
+
+
+class NewsListSerializer(NewsSerializer):
+    """Compact serializer for cards and archive lists.
+
+    Article HTML can be very large, so it should only be returned by the
+    detail endpoint (and the staff editor), not once per card on the homepage.
+    """
+
+    class Meta(NewsSerializer.Meta):
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "category",
+            "summary",
+            "image_url",
+            "author",
+            "author_name",
+            "published_at",
+            "updated_at",
+            "is_published",
+            "view_count",
+        ]
