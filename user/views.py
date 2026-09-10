@@ -17,7 +17,7 @@ class NewsListView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        queryset = News.objects.filter(is_published=True)
+        queryset = News.objects.filter(is_published=True).select_related("author")
 
         category = self.request.query_params.get("category")
         search = self.request.query_params.get("search")
@@ -45,7 +45,7 @@ class RecentNewsView(generics.ListAPIView):
         return News.objects.filter(
             is_published=True,
             published_at__gte=five_days_ago
-        )
+        ).select_related("author")
 
 
 class NewsDetailView(generics.RetrieveAPIView):
@@ -91,7 +91,7 @@ class NewsByDateView(generics.ListAPIView):
     def get_queryset(self):
         date = self.request.query_params.get("date")
 
-        queryset = News.objects.filter(is_published=True)
+        queryset = News.objects.filter(is_published=True).select_related("author")
 
         if date:
             queryset = queryset.filter(published_at__date=date)
